@@ -127,7 +127,7 @@ public class GameController {
         else {
             if (key.equals(KeyCode.LEFT)) if (!this.key.equals(KeyCode.RIGHT)) return true;
             if (key.equals(KeyCode.RIGHT)) if (!this.key.equals(KeyCode.LEFT)) return true;
-            if (key.equals(KeyCode.DOWN)) if (!this.key.equals(KeyCode.DOWN)) return true;
+            if (key.equals(KeyCode.DOWN)) if (!this.key.equals(KeyCode.UP)) return true;
             if (key.equals(KeyCode.UP)) return !this.key.equals(KeyCode.DOWN);
             return false;
         }

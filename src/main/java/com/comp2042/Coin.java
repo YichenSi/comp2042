@@ -8,17 +8,20 @@ import java.util.Random;
 public class Coin {
     private Point pos;
     private Image image = new Image("resources/views/res/redcoin.png");
+    private static final int MAX_PLACEMENT_ATTEMPTS = 200;
 
     public Coin(int x, int y, Snake snek, Obstacle obstacle) {
-        int tx;
-        int ty;
-        do {
-            Random rnd = new Random();
-
-            tx = rnd.nextInt(x);
-            ty = rnd.nextInt(y);
-            pos = new Point(tx, ty);
-        } while (snek.getHead().equals(pos) || snek.getBody().contains(pos) || obstacle.getObstacles().contains(pos));
+        Random rnd = new Random();
+        Point candidate = new Point();
+        for (int attempt = 0; attempt < MAX_PLACEMENT_ATTEMPTS; attempt++) {
+            Point p = new Point(rnd.nextInt(x), rnd.nextInt(y));
+            if (!snek.getHead().equals(p) && !snek.getBody().contains(p)
+                    && !obstacle.getObstacles().contains(p)) {
+                candidate = p;
+                break;
+            }
+        }
+        pos = candidate;
     }
 
     public Point getPos() {

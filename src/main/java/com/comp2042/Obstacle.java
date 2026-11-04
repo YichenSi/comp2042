@@ -11,6 +11,8 @@ public class Obstacle {
     private ArrayList<Point> obstacles = new ArrayList<>();
     private int x;
     private int y;
+    private static final int MAX_PLACEMENT_ATTEMPTS = 200;
+    private static final int MAX_OBSTACLES = 50;
 
     public Obstacle(int x, int y) {
        this.x = x;
@@ -18,18 +20,27 @@ public class Obstacle {
     }
 
     public void newObstacles(Snake snek, Coin coin, int amount) {
-        if (obstacles.size() > 50) {
-            return;
-        }
         Random rnd = new Random();
-        Point p;
-        for (int i=0; i<amount; i++) {
-            do {
-                p = new Point(rnd.nextInt(x), rnd.nextInt(y));
-            } while (obstacles.contains(p) || coin.getPos().equals(p) || snek.getBody().contains(p) || snek.getHead().equals(p));
-            obstacles.add(p);
+        for (int i=0; i<amount && obstacles.size() < MAX_OBSTACLES; i++) {
+            Point candidate = null;
+            for (int attempt = 0; attempt < MAX_PLACEMENT_ATTEMPTS; attempt++) {
+                Point p = new Point(rnd.nextInt(x), rnd.nextInt(y));
+                if (!isOccupied(p, snek, coin)) {
+                    candidate = p;
+                    break;
+                }
+            }
+            if (candidate != null) obstacles.add(candidate);
         }
     }
+
+    private boolean isOccupied(Point p, Snake snek, Coin coin) {
+        return obstacles.contains(p)
+                || coin.getPos().equals(p)
+                || snek.getBody().contains(p)
+                || snek.getHead().equals(p);
+    }
+
 
     public Color getColor() {
         return color;

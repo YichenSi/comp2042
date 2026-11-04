@@ -8,6 +8,7 @@ public class Game {
     private int height;
     private int score;
     private int maxScore;
+    private final int initialMaxScore;
     private double multiplier;
     private int scorePoints;
     private double speed;
@@ -29,6 +30,7 @@ public class Game {
         width = x;
         height = y;
         maxScore = x * y - 2;
+        this.initialMaxScore = maxScore;
         this.powerUp = powerUp;
         if (height > 50) {
             multiplier = 10;
@@ -60,6 +62,7 @@ public class Game {
     public void resetScore() {
         score = 0;
         scorePoints = 0;
+        maxScore = initialMaxScore;
     }
 
     public Color getColor() {

@@ -25,7 +25,7 @@ public class Obstacle {
         Point p;
         for (int i=0; i<amount; i++) {
             do {
-                p = new Point(rnd.nextInt(x) + 1, rnd.nextInt(y));
+                p = new Point(rnd.nextInt(x), rnd.nextInt(y));
             } while (coin.getPos().equals(p) || snek.getBody().contains(p) || snek.getHead().equals(p));
             obstacles.add(p);
         }

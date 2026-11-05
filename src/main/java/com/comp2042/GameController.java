@@ -116,9 +116,10 @@ public class GameController {
         }
 
         if (event.getCode().equals(KeyCode.ESCAPE)) {
-            MainMenuController mainMenuController = new MainMenuController();
-            mainMenuController.getViewManager().getPrimaryStage().show();
-            mainMenuController.getViewManager().getGameStage().close();
+            animation.stop();
+            ViewManager viewManager = Main.getViewManager();
+            viewManager.getGameStage().close();
+            viewManager.getPrimaryStage().show();
         }
     }
 

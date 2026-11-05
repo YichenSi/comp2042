@@ -129,7 +129,8 @@ public class GameView {
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
         Image rotatedImage = snek.getImageViewHead().snapshot(params, null);
-        gc.drawImage(rotatedImage, (snek.getHead().x * game.getMultiplier()) * fullScale, (snek.getHead().y * game.getMultiplier()) * fullScale, game.getMultiplier() * fullScale * fullScale, game.getMultiplier() * fullScale * fullScale);
+        double size = game.getMultiplier() * fullScale;
+        gc.drawImage(rotatedImage, snek.getHead().x * size, snek.getHead().y * size, size, size);
     }
 
     private void drawBody(Snake snek, Point point, int index) {
@@ -169,8 +170,8 @@ public class GameView {
         if (turnArray[(int) snek.getBody().get(0).getX()][(int) snek.getBody().get(0).getY()] != 0) {
             turnArray[(int) snek.getBody().get(0).getX()][(int) snek.getBody().get(0).getY()] = 0;
         }
-
-        gc.drawImage(rotatedImage, (point.x * game.getMultiplier()) * fullScale, (point.y * game.getMultiplier()) * fullScale, game.getMultiplier() * fullScale * fullScale, game.getMultiplier() * fullScale * fullScale);
+        double size = game.getMultiplier() * fullScale;
+        gc.drawImage(rotatedImage, point.x * size, point.y * size, size, size);
     }
 
     public void turnDir(Snake snek) {

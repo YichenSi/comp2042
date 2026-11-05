@@ -24,16 +24,17 @@ public class GameView {
     public Label scoreLabel;
     private boolean gameOverVis = false;
     private boolean gameWonVis = false;
+    private final int[][] turnArray;
 
     private Game game;
     private double initX;
     private double initY;
     private double fullScale = 1;
     private boolean fullsize = false;
-    private int[][] turnArray = new int[MainMenuController.getxValue()][MainMenuController.getyValue()];
 
     public GameView(Game game) {
         this.game = game;
+        this.turnArray = new int[game.getWidth()][game.getHeight()];
     }
 
     public void makeScene(Scene scene, Snake snek, Coin coin) {

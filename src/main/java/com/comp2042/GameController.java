@@ -101,14 +101,14 @@ public class GameController {
             gameView.scoreLabel.setText("Score: " + game.getScorePoints());
         }
 
-        if (event.getCode().equals(KeyCode.PLUS)) {
+        if ("+".equals(event.getText()) || event.getCode() == KeyCode.PLUS) {
             gameView.scaleToFullscreen(true, stage, obstacle, snek, coin);
             gameView.gameOverLabel.setStyle("-fx-font-size: 50;");
             gameView.gameWonLabel.setStyle("-fx-font-size: 50;");
             gameView.scoreLabel.setStyle("-fx-font-size: 35;");
         }
 
-        if (event.getCode().equals(KeyCode.MINUS)) {
+        if ("-".equals(event.getText()) || event.getCode() == KeyCode.MINUS) {
             gameView.scaleToFullscreen(false, stage, obstacle, snek, coin);
             gameView.gameOverLabel.setStyle("-fx-font-size: 15;");
             gameView.gameWonLabel.setStyle("-fx-font-size: 15;");

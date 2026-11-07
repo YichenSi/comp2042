@@ -22,8 +22,8 @@ public class GameController {
     private String coinSoundPath = "resources/views/res/coinSound.wav";
     private Obstacle obstacle;
 
-    public static KeyCode key = KeyCode.LEFT;
-    public static KeyCode lastKey = KeyCode.LEFT;
+    private KeyCode key = KeyCode.LEFT;
+    private KeyCode lastKey = KeyCode.LEFT;
     private boolean keyPressed = false;
 
     private int legacyScoreMultiplier = 2;
@@ -89,7 +89,7 @@ public class GameController {
             lastKey = key;
             key = event.getCode();
             keyPressed = true;
-            gameView.turnDir(snek);
+            gameView.turnDir(snek, lastKey, key);
         }
 
         if (event.getCode().equals(KeyCode.P)) {

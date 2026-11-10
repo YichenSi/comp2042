@@ -48,7 +48,7 @@ public class MainMenuController {
 
         gameScene.setOnKeyPressed(controller::handle);
 
-        gameView.makeScene(gameScene, snek, coin);
+        gameView.makeScene(gameScene, snek, coin, obstacle);
         gamePane.getChildren().addAll(gameView.gridCanvas, gameView.gameOverLabel, gameView.gameWonLabel, gameView.scoreLabel);
         gamePane.setPadding(new Insets(20));
         gamePane.setAlignment(gameView.gameOverLabel, Pos.TOP_CENTER);

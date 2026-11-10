@@ -57,7 +57,7 @@ public class GameController {
                 powerCoin();
                 game.incScore();
                 if (game.gameWon()) {
-                    gameView.drawGrid(coin, snek, obstacle, gameView.gc, false, 0);
+                    gameView.drawGrid(coin, snek, obstacle, gameView.gc);
                     return;
                 }
                 newCoin();
@@ -66,7 +66,7 @@ public class GameController {
             keyPressed = false;
 
             if (!snek.getDead() || snek.hitSelf()) {
-                gameView.drawGrid(coin, snek, obstacle, gameView.gc, false, 0);
+                gameView.drawGrid(coin, snek, obstacle, gameView.gc);
             }
 
             gameView.gameWon();
@@ -145,7 +145,7 @@ public class GameController {
         gameView.gameOver(snek);
         gameView.updateScoreLabel();
 
-        gameView.drawGrid(coin, snek, obstacle, gameView.gc, false, 0);
+        gameView.drawGrid(coin, snek, obstacle, gameView.gc);
     }
 
     private void powerCoin() {

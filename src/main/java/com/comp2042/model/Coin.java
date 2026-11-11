@@ -10,12 +10,12 @@ public class Coin {
     private Image image = new Image("resources/views/res/redcoin.png");
     private static final int MAX_PLACEMENT_ATTEMPTS = 200;
 
-    public Coin(int x, int y, Snake snek, Obstacle obstacle) {
+    public Coin(int x, int y, Snake snake, Obstacle obstacle) {
         Random rnd = new Random();
         Point candidate = new Point();
         for (int attempt = 0; attempt < MAX_PLACEMENT_ATTEMPTS; attempt++) {
             Point p = new Point(rnd.nextInt(x), rnd.nextInt(y));
-            if (!snek.getHead().equals(p) && !snek.getBody().contains(p)
+            if (!snake.getHead().equals(p) && !snake.getBody().contains(p)
                     && !obstacle.getObstacles().contains(p)) {
                 candidate = p;
                 break;

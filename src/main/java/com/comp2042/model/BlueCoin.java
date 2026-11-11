@@ -5,8 +5,8 @@ import javafx.scene.image.Image;
 public class BlueCoin extends Coin {
     private Image image = new Image("resources/views/res/bluecoin.png");
 
-    public BlueCoin(int x, int y, Snake snek, Obstacle obstacle) {
-        super(x, y, snek, obstacle);
+    public BlueCoin(int x, int y, Snake snake, Obstacle obstacle) {
+        super(x, y, snake, obstacle);
     }
 
     public int getPoints() {

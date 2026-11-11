@@ -5,8 +5,8 @@ import javafx.scene.image.Image;
 public class GoldCoin extends Coin {
     private Image image = new Image("resources/views/res/goldcoin.png");
 
-    public GoldCoin(int x, int y, Snake snek, Obstacle obstacle) {
-        super(x, y, snek, obstacle);
+    public GoldCoin(int x, int y, Snake snake, Obstacle obstacle) {
+        super(x, y, snake, obstacle);
     }
 
     public Image getImage() {

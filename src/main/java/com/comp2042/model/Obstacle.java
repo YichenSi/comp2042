@@ -19,13 +19,13 @@ public class Obstacle {
        this.y = y;
     }
 
-    public void newObstacles(Snake snek, Coin coin, int amount) {
+    public void newObstacles(Snake snake, Coin coin, int amount) {
         Random rnd = new Random();
         for (int i=0; i<amount && obstacles.size() < MAX_OBSTACLES; i++) {
             Point candidate = null;
             for (int attempt = 0; attempt < MAX_PLACEMENT_ATTEMPTS; attempt++) {
                 Point p = new Point(rnd.nextInt(x), rnd.nextInt(y));
-                if (!isOccupied(p, snek, coin)) {
+                if (!isOccupied(p, snake, coin)) {
                     candidate = p;
                     break;
                 }
@@ -34,11 +34,11 @@ public class Obstacle {
         }
     }
 
-    private boolean isOccupied(Point p, Snake snek, Coin coin) {
+    private boolean isOccupied(Point p, Snake snake, Coin coin) {
         return obstacles.contains(p)
                 || coin.getPos().equals(p)
-                || snek.getBody().contains(p)
-                || snek.getHead().equals(p);
+                || snake.getBody().contains(p)
+                || snake.getHead().equals(p);
     }
 
 

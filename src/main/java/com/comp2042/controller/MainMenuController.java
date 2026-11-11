@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 
 public class MainMenuController {
 
-    private static final int X_VALUE = 20;
-    private static final int Y_VALUE = 20;
+    private static final int BOARD_WIDTH = 20;
+    private static final int BOARD_HEIGHT = 20;
     private static final boolean POWER_UP = true;
     private static final char DIFFICULTY = 'N';
 
@@ -35,20 +35,20 @@ public class MainMenuController {
     }
 
     private void launchSnake(Stage gameStage) {
-        Game game = new Game(X_VALUE, Y_VALUE, POWER_UP, DIFFICULTY);
+        Game game = new Game(BOARD_WIDTH, BOARD_HEIGHT, POWER_UP, DIFFICULTY);
         Obstacle obstacle = new Obstacle(game.getWidth(), game.getHeight());
-        Snake snek = new Snake(game.getWidth(), game.getHeight(), game.isNoBorder(), obstacle);
-        Coin coin = new Coin(game.getWidth(), game.getHeight(), snek, obstacle);
+        Snake snake = new Snake(game.getWidth(), game.getHeight(), game.isNoBorder(), obstacle);
+        Coin coin = new Coin(game.getWidth(), game.getHeight(), snake, obstacle);
 
         GameView gameView = new GameView(game);
-        GameController controller = new GameController(snek, coin, game, gameView, obstacle, gameStage);
+        GameController controller = new GameController(snake, coin, game, gameView, obstacle, gameStage);
 
         StackPane gamePane = new StackPane();
         gameScene = new Scene(gamePane, game.getWidth() * game.getMultiplier(), game.getHeight() * game.getMultiplier());
 
         gameScene.setOnKeyPressed(controller::handle);
 
-        gameView.makeScene(gameScene, snek, coin, obstacle);
+        gameView.makeScene(gameScene, snake, coin, obstacle);
         gamePane.getChildren().addAll(gameView.gridCanvas, gameView.gameOverLabel, gameView.gameWonLabel, gameView.scoreLabel);
         gamePane.setPadding(new Insets(20));
         gamePane.setAlignment(gameView.gameOverLabel, Pos.TOP_CENTER);

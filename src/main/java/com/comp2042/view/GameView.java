@@ -15,17 +15,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
+import javafx.geometry.Pos;
+import javafx.scene.layout.StackPane;
 import java.awt.*;
 
 public class GameView {
 
-    public Canvas gridCanvas;
-    public GraphicsContext gc;
+    private Canvas gridCanvas;
+    private GraphicsContext gc;
 
-    public Label gameOverLabel;
-    public Label gameWonLabel;
-    public Label scoreLabel;
+    private Label gameOverLabel;
+    private Label gameWonLabel;
+    private Label scoreLabel;
     private boolean gameOverVis = false;
     private boolean gameWonVis = false;
     private final int[][] turnArray;
@@ -47,7 +48,7 @@ public class GameView {
         initialWidth = scene.getWidth();
         initialHeight = scene.getHeight();
         gc = gridCanvas.getGraphicsContext2D();
-        drawGrid(coin, snake, obstacle, gc);
+        drawGrid(coin, snake, obstacle);
 
 
         gameOverLabel = new Label("GAME OVER");
@@ -92,10 +93,10 @@ public class GameView {
 
         gameOverLabel.setFont(new Font("Arial", 25 * fullScale));
         gameWonLabel.setFont(new Font("Arial", 25 * fullScale));
-        drawGrid(coin, snake, obstacle, gc);
+        drawGrid(coin, snake, obstacle);
     }
 
-    public void drawGrid(Coin coin, Snake snake, Obstacle obstacle, GraphicsContext gc) {
+    public void drawGrid(Coin coin, Snake snake, Obstacle obstacle) {
         gc.setFill(game.getColor());
         gc.fillRect(0, 0, gridCanvas.getWidth(), gridCanvas.getHeight());
 
@@ -200,6 +201,25 @@ public class GameView {
 
     public void updateScoreLabel() {
         scoreLabel.setText("Score: " + game.getScorePoints());
+    }
+
+    public void attachTo(StackPane pane) {
+        pane.getChildren().addAll(gridCanvas, gameOverLabel, gameWonLabel, scoreLabel);
+        StackPane.setAlignment(gameOverLabel, Pos.TOP_CENTER);
+        StackPane.setAlignment(gameWonLabel, Pos.TOP_CENTER);
+        StackPane.setAlignment(scoreLabel, Pos.BOTTOM_CENTER);
+    }
+
+    public void useLargeFonts() {
+        gameOverLabel.setStyle("-fx-font-size: 50;");
+        gameWonLabel.setStyle("-fx-font-size: 50;");
+        scoreLabel.setStyle("-fx-font-size: 35;");
+    }
+
+    public void useSmallFonts() {
+        gameOverLabel.setStyle("-fx-font-size: 15;");
+        gameWonLabel.setStyle("-fx-font-size: 15;");
+        scoreLabel.setStyle("-fx-font-size: 15;");
     }
 
 }

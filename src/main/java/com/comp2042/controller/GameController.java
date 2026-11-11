@@ -19,7 +19,7 @@ public class GameController {
     private Coin coin;
     private GameView gameView;
     private Game game;
-    private Stage stage;
+    private final Stage stage;
     private Obstacle obstacle;
 
     private KeyCode key = KeyCode.LEFT;
@@ -57,7 +57,7 @@ public class GameController {
                 applyCoinEffect();
                 game.incScore();
                 if (game.gameWon()) {
-                    gameView.drawGrid(coin, snake, obstacle, gameView.gc);
+                    gameView.drawGrid(coin, snake, obstacle);
                     return;
                 }
                 spawnCoin();
@@ -66,7 +66,7 @@ public class GameController {
             keyPressed = false;
 
             if (!snake.getDead() || snake.hitSelf()) {
-                gameView.drawGrid(coin, snake, obstacle, gameView.gc);
+                gameView.drawGrid(coin, snake, obstacle);
             }
 
             gameView.gameWon();
@@ -91,21 +91,16 @@ public class GameController {
 
         if (event.getCode().equals(KeyCode.TAB)) {
             reset();
-            gameView.scoreLabel.setText("Score: " + game.getScorePoints());
         }
 
         if ("+".equals(event.getText()) || event.getCode() == KeyCode.PLUS) {
             gameView.scaleToFullscreen(true, stage, obstacle, snake, coin);
-            gameView.gameOverLabel.setStyle("-fx-font-size: 50;");
-            gameView.gameWonLabel.setStyle("-fx-font-size: 50;");
-            gameView.scoreLabel.setStyle("-fx-font-size: 35;");
+            gameView.useLargeFonts();
         }
 
         if ("-".equals(event.getText()) || event.getCode() == KeyCode.MINUS) {
             gameView.scaleToFullscreen(false, stage, obstacle, snake, coin);
-            gameView.gameOverLabel.setStyle("-fx-font-size: 15;");
-            gameView.gameWonLabel.setStyle("-fx-font-size: 15;");
-            gameView.scoreLabel.setStyle("-fx-font-size: 15;");
+            gameView.useSmallFonts();
         }
 
         if (event.getCode().equals(KeyCode.ESCAPE)) {
@@ -145,7 +140,7 @@ public class GameController {
         gameView.gameOver(snake);
         gameView.updateScoreLabel();
 
-        gameView.drawGrid(coin, snake, obstacle, gameView.gc);
+        gameView.drawGrid(coin, snake, obstacle);
     }
 
     private void applyCoinEffect() {

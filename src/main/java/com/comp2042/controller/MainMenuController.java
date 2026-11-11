@@ -8,7 +8,6 @@ import com.comp2042.model.Snake;
 import com.comp2042.view.GameView;
 import com.comp2042.view.ViewManager;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -49,11 +48,8 @@ public class MainMenuController {
         gameScene.setOnKeyPressed(controller::handle);
 
         gameView.makeScene(gameScene, snake, coin, obstacle);
-        gamePane.getChildren().addAll(gameView.gridCanvas, gameView.gameOverLabel, gameView.gameWonLabel, gameView.scoreLabel);
+        gameView.attachTo(gamePane);
         gamePane.setPadding(new Insets(20));
-        gamePane.setAlignment(gameView.gameOverLabel, Pos.TOP_CENTER);
-        gamePane.setAlignment(gameView.gameWonLabel, Pos.TOP_CENTER);
-        gamePane.setAlignment(gameView.scoreLabel, Pos.BOTTOM_CENTER);
     }
 
     public ViewManager getViewManager() {

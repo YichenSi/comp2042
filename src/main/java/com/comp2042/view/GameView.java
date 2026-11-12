@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -116,11 +117,15 @@ public class GameView {
         }
     }
 
-    private void drawHead(Snake snake) {
-        snake.getImageViewHead().setRotate(snake.getSnakeDir());
+    private Image rotate(ImageView view, double degrees) {
+        view.setRotate(degrees);
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
-        Image rotatedImage = snake.getImageViewHead().snapshot(params, null);
+        return view.snapshot(params, null);
+    }
+
+    private void drawHead(Snake snake) {
+        Image rotatedImage = rotate(snake.getImageViewHead(), snake.getSnakeDir());
         double size = game.getMultiplier() * fullScale;
         gc.drawImage(rotatedImage, snake.getHead().x * size, snake.getHead().y * size, size, size);
     }
@@ -128,10 +133,7 @@ public class GameView {
     private void drawBody(Snake snake, Point point, int index) {
         Image rotatedImage;
         if (snake.getBody().size() <= 1) {
-            snake.getImageViewTail().setRotate(snake.getSnakeDir());
-            SnapshotParameters params = new SnapshotParameters();
-            params.setFill(Color.TRANSPARENT);
-            rotatedImage = snake.getImageViewTail().snapshot(params, null);
+            rotatedImage = rotate(snake.getImageViewTail(), snake.getSnakeDir());
         } else if (index == 0) {
             int rotateTail;
             if (snake.getBody().get(1).getX() == snake.getBody().get(0).getX() && snake.getBody().get(1).getY() == snake.getBody().get(0).getY() - 1) {
@@ -143,20 +145,11 @@ public class GameView {
             } else {
                 rotateTail = 90;
             }
-            snake.getImageViewTail().setRotate(rotateTail);
-            SnapshotParameters params = new SnapshotParameters();
-            params.setFill(Color.TRANSPARENT);
-            rotatedImage = snake.getImageViewTail().snapshot(params, null);
+            rotatedImage = rotate(snake.getImageViewTail(), rotateTail);
         } else if (index > 0 && (turnArray[(int) snake.getBody().get(index).getX()][(int) snake.getBody().get(index).getY()] != 0)) {
-            snake.getImageViewTurn().setRotate(90 * turnArray[(int) snake.getBody().get(index).getX()][(int) snake.getBody().get(index).getY()]);
-            SnapshotParameters params = new SnapshotParameters();
-            params.setFill(Color.TRANSPARENT);
-            rotatedImage = snake.getImageViewTurn().snapshot(params, null);
+            rotatedImage = rotate(snake.getImageViewTurn(), 90 * turnArray[(int) snake.getBody().get(index).getX()][(int) snake.getBody().get(index).getY()]);
         } else {
-            snake.getImageViewBody().setRotate(snake.getBodyDir(index));
-            SnapshotParameters params = new SnapshotParameters();
-            params.setFill(Color.TRANSPARENT);
-            rotatedImage = snake.getImageViewBody().snapshot(params, null);
+            rotatedImage = rotate(snake.getImageViewBody(), snake.getBodyDir(index));
         }
 
         if (turnArray[(int) snake.getBody().get(0).getX()][(int) snake.getBody().get(0).getY()] != 0) {

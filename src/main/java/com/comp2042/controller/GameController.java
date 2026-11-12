@@ -139,6 +139,7 @@ public class GameController {
         gameView.gameWon();
         gameView.gameOver(snake);
         gameView.updateScoreLabel();
+        gameView.clearTurnMarkers();
 
         gameView.drawGrid(coin, snake, obstacle);
     }

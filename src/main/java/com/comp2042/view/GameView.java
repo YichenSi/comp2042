@@ -178,6 +178,13 @@ public class GameView {
         } else turnArray[(int) snake.getHead().getX()][(int) snake.getHead().getY()] = 0;
     }
 
+    public void clearTurnMarkers() {
+        for (int x = 0; x < turnArray.length; x++) {
+            for (int y = 0; y < turnArray[x].length; y++) {
+                turnArray[x][y] = 0;
+            }
+        }
+    }
 
     public void gameOver(Snake snake) {
         if (snake.getDead() && !gameOverVis) {

@@ -16,7 +16,8 @@ public class ViewManager {
 
     private Stage gameStage;
 
-    private Image snakeLogo = new Image("resources/views/res/SnakeLogoWhite.png");
+    private Image snakeLogo = new Image(ViewManager.class.getResourceAsStream("/resources/views/res/SnakeLogoWhite.png"));
+
 
     public ViewManager() {
     }

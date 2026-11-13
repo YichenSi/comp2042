@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Coin {
     private Point pos;
-    private Image image = new Image("resources/views/res/redcoin.png");
+    private Image image;
     private static final int MAX_PLACEMENT_ATTEMPTS = 200;
 
     public Coin(int x, int y, Snake snake, Obstacle obstacle) {
@@ -24,6 +24,10 @@ public class Coin {
         pos = candidate;
     }
 
+    protected String getImageFile() {
+        return "redcoin.png";
+    }
+
     public Point getPos() {
         return new Point(pos);
     }
@@ -34,6 +38,9 @@ public class Coin {
     }
 
     public Image getImage() {
+        if (image == null) {
+            image = new Image(Coin.class.getResourceAsStream("/resources/views/res/" + getImageFile()));
+        }
         return image;
     }
 }

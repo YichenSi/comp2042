@@ -18,7 +18,13 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
+import javafx.geometry.Insets;
 import java.awt.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.Priority;
+
 
 public class GameView {
 
@@ -37,6 +43,7 @@ public class GameView {
     private double initialWidth;
     private double initialHeight;
     private double fullScale = 1;
+    public static final double HUD_HEIGHT = 60;
     private boolean isFullscreen = false;
 
     public GameView(Game game) {
@@ -46,9 +53,9 @@ public class GameView {
 
     public void makeScene(Scene scene, Snake snake, Coin coin, Obstacle obstacle) {
         Scene gameScene = scene;
-        gridCanvas = new Canvas(gameScene.getWidth(), gameScene.getHeight());
+        gridCanvas = new Canvas(gameScene.getWidth(), gameScene.getHeight() - HUD_HEIGHT);
         initialWidth = scene.getWidth();
-        initialHeight = scene.getHeight();
+        initialHeight = scene.getHeight() - HUD_HEIGHT;
         gc = gridCanvas.getGraphicsContext2D();
         drawGrid(coin, snake, obstacle);
 
@@ -215,24 +222,40 @@ public class GameView {
         levelLabel.setText("Level: " + level);
     }
 
-    public void attachTo(StackPane pane) {
-        pane.getChildren().addAll(gridCanvas, gameOverLabel, gameWonLabel, scoreLabel, levelLabel);
-        StackPane.setAlignment(gameOverLabel, Pos.TOP_CENTER);
-        StackPane.setAlignment(gameWonLabel, Pos.TOP_CENTER);
-        StackPane.setAlignment(scoreLabel, Pos.BOTTOM_CENTER);
-        StackPane.setAlignment(levelLabel, Pos.BOTTOM_LEFT);
+    public void attachTo(BorderPane root, StackPane boardPane) {
+        boardPane.getChildren().addAll(gridCanvas, gameOverLabel, gameWonLabel);
+        StackPane.setAlignment(gameOverLabel, Pos.CENTER);
+        StackPane.setAlignment(gameWonLabel, Pos.CENTER);
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        HBox hud = new HBox(levelLabel, spacer, scoreLabel);
+        hud.setAlignment(Pos.CENTER_LEFT);
+        hud.setPadding(new Insets(0, 14, 0, 14));
+        hud.setPrefHeight(HUD_HEIGHT);
+        hud.setMinHeight(HUD_HEIGHT);
+        hud.setStyle("-fx-background-color: #feffe4;"
+                + "-fx-border-color: transparent transparent rgba(0, 0, 0, 0.12) transparent;"
+                + "-fx-border-width: 0 0 1 0;");
+
+        root.setTop(hud);
+        root.setCenter(boardPane);
     }
+
 
     public void useLargeFonts() {
         gameOverLabel.setStyle("-fx-font-size: 50;");
         gameWonLabel.setStyle("-fx-font-size: 50;");
         scoreLabel.setStyle("-fx-font-size: 35;");
+        levelLabel.setStyle("-fx-font-size: 35;");
     }
 
     public void useSmallFonts() {
         gameOverLabel.setStyle("-fx-font-size: 15;");
         gameWonLabel.setStyle("-fx-font-size: 15;");
         scoreLabel.setStyle("-fx-font-size: 15;");
+        levelLabel.setStyle("-fx-font-size: 15;");
     }
 
 }

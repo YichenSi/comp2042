@@ -7,9 +7,9 @@ import com.comp2042.model.Obstacle;
 import com.comp2042.model.Snake;
 import com.comp2042.view.GameView;
 import com.comp2042.view.ViewManager;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class MainMenuController {
@@ -42,18 +42,18 @@ public class MainMenuController {
         GameView gameView = new GameView(game);
         GameController controller = new GameController(snake, coin, game, gameView, obstacle, gameStage);
 
-        StackPane gamePane = new StackPane();
-        gameScene = new Scene(gamePane, game.getWidth() * game.getMultiplier(), game.getHeight() * game.getMultiplier());
+        BorderPane root = new BorderPane();
+        StackPane boardPane = new StackPane();
+        gameScene = new Scene(root, game.getWidth() * game.getMultiplier(), game.getHeight() * game.getMultiplier() + GameView.HUD_HEIGHT);
 
         gameScene.setOnKeyPressed(controller::handle);
 
         gameView.makeScene(gameScene, snake, coin, obstacle);
-        gameView.attachTo(gamePane);
-        gamePane.setPadding(new Insets(20));
+        gameView.attachTo(root, boardPane);
+
     }
 
     public ViewManager getViewManager() {
         return viewManager;
     }
-
 }

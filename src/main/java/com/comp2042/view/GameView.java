@@ -28,6 +28,7 @@ public class GameView {
     private Label gameOverLabel;
     private Label gameWonLabel;
     private Label scoreLabel;
+    private Label levelLabel;
     private boolean gameOverVis = false;
     private boolean gameWonVis = false;
     private final int[][] turnArray;
@@ -68,6 +69,13 @@ public class GameView {
         scoreLabel.getStylesheets().add(css);
         scoreLabel.setFont(new Font("Arial", 20));
         scoreLabel.setVisible(true);
+
+        levelLabel = new Label("Level: 1");
+        levelLabel.setId("levelLabel");
+        levelLabel.getStylesheets().add(css);
+        levelLabel.setFont(new Font("Arial", 20));
+        levelLabel.setVisible(true);
+
     }
 
     public void scaleToFullscreen(boolean fullScreen, Stage primaryStage, Obstacle obstacle, Snake snake, Coin coin) {
@@ -203,11 +211,16 @@ public class GameView {
         scoreLabel.setText("Score: " + game.getScorePoints());
     }
 
+    public void updateLevelLabel(int level) {
+        levelLabel.setText("Level: " + level);
+    }
+
     public void attachTo(StackPane pane) {
-        pane.getChildren().addAll(gridCanvas, gameOverLabel, gameWonLabel, scoreLabel);
+        pane.getChildren().addAll(gridCanvas, gameOverLabel, gameWonLabel, scoreLabel, levelLabel);
         StackPane.setAlignment(gameOverLabel, Pos.TOP_CENTER);
         StackPane.setAlignment(gameWonLabel, Pos.TOP_CENTER);
         StackPane.setAlignment(scoreLabel, Pos.BOTTOM_CENTER);
+        StackPane.setAlignment(levelLabel, Pos.BOTTOM_LEFT);
     }
 
     public void useLargeFonts() {

@@ -22,6 +22,7 @@ public class GameController {
     private final Stage stage;
     private Obstacle obstacle;
     private final CoinFactory coinFactory;
+    private final LevelManager levelManager = new LevelManager();
 
     private KeyCode key = KeyCode.LEFT;
     private KeyCode lastKey = KeyCode.LEFT;
@@ -136,6 +137,9 @@ public class GameController {
         key = KeyCode.LEFT;
         keyPressed = false;
         game.resetScore();
+        levelManager.reset();
+        gameView.updateLevelLabel(1);
+
         obstacle.reset();
 
         gameView.gameWon();
@@ -147,11 +151,12 @@ public class GameController {
     }
 
     private void applyCoinEffect() {
-        animation.setRate(game.getSpeed());
+        animation.setRate(game.getSpeed() + levelManager.getSpeedBonus());
         snake.ignoreBorders(false);
         if (coin.getClass().equals(RainbowCoin.class)) {
             RainbowCoin tempCoin = (RainbowCoin) coin;
-            animation.setRate(game.getSpeed() + tempCoin.getSpeedBonus());
+            animation.setRate(game.getSpeed() + levelManager.getSpeedBonus() + tempCoin.getSpeedBonus());
+
         } else if (coin.getClass().equals(SilverCoin.class)){
             Random rnd = new Random();
             int before = obstacle.getObstacles().size();
@@ -162,7 +167,21 @@ public class GameController {
             snake.ignoreBorders(true);
         }
         game.addPoints(coin.getPoints());
+
+        if (levelManager.update(game.getScorePoints())) {
+            applyLevelUp();
+        }
     }
+
+    private void applyLevelUp() {
+        animation.setRate(game.getSpeed() + levelManager.getSpeedBonus());
+        int before = obstacle.getObstacles().size();
+        obstacle.newObstacles(snake, coin, levelManager.getExtraObstacles());
+        int added = obstacle.getObstacles().size() - before;
+        game.decMaxScore(added);
+        gameView.updateLevelLabel(levelManager.getLevel());
+    }
+
 
     private void spawnCoin() {
         coin = coinFactory.create(snake, obstacle);

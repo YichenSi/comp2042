@@ -35,6 +35,7 @@ public class GameView {
     private Label gameWonLabel;
     private Label scoreLabel;
     private Label levelLabel;
+    private Label bestLabel;
     private boolean gameOverVis = false;
     private boolean gameWonVis = false;
     private final int[][] turnArray;
@@ -82,7 +83,11 @@ public class GameView {
         levelLabel.getStylesheets().add(css);
         levelLabel.setFont(new Font("Arial", 20));
         levelLabel.setVisible(true);
-
+        bestLabel = new Label("Best: 0");
+        bestLabel.setId("bestLabel");
+        bestLabel.getStylesheets().add(css);
+        bestLabel.setFont(new Font("Arial", 20));
+        bestLabel.setVisible(true);
     }
 
     public void scaleToFullscreen(boolean fullScreen, Stage primaryStage, Obstacle obstacle, Snake snake, Coin coin) {
@@ -222,6 +227,10 @@ public class GameView {
         levelLabel.setText("Level: " + level);
     }
 
+    public void updateBestLabel(int best, boolean isNew) {
+        bestLabel.setText((isNew ? "New Best: " : "Best: ") + best);
+    }
+
     public void attachTo(BorderPane root, StackPane boardPane) {
         boardPane.getChildren().addAll(gridCanvas, gameOverLabel, gameWonLabel);
         StackPane.setAlignment(gameOverLabel, Pos.CENTER);
@@ -229,8 +238,10 @@ public class GameView {
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
+        Region spacer2 = new Region();
+        HBox.setHgrow(spacer2, Priority.ALWAYS);
 
-        HBox hud = new HBox(levelLabel, spacer, scoreLabel);
+        HBox hud = new HBox(levelLabel, spacer, bestLabel, spacer2, scoreLabel);
         hud.setAlignment(Pos.CENTER_LEFT);
         hud.setPadding(new Insets(0, 14, 0, 14));
         hud.setPrefHeight(HUD_HEIGHT);
@@ -249,6 +260,7 @@ public class GameView {
         gameWonLabel.setStyle("-fx-font-size: 50;");
         scoreLabel.setStyle("-fx-font-size: 35;");
         levelLabel.setStyle("-fx-font-size: 35;");
+        bestLabel.setStyle("-fx-font-size: 35;");
     }
 
     public void useSmallFonts() {
@@ -256,6 +268,7 @@ public class GameView {
         gameWonLabel.setStyle("-fx-font-size: 15;");
         scoreLabel.setStyle("-fx-font-size: 15;");
         levelLabel.setStyle("-fx-font-size: 15;");
+        bestLabel.setStyle("-fx-font-size: 15;");
     }
 
 }

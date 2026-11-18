@@ -50,7 +50,7 @@ public class MainMenuController {
 
         gameView.makeScene(gameScene, snake, coin, obstacle);
         gameView.attachTo(root, boardPane);
-
+        controller.showBestScore();
     }
 
     public ViewManager getViewManager() {

@@ -23,6 +23,8 @@ public class GameController {
     private Obstacle obstacle;
     private final CoinFactory coinFactory;
     private final LevelManager levelManager = new LevelManager();
+    private final HighScoreStore highScoreStore = new HighScoreStore();
+    private boolean scoreSaved = false;
 
     private KeyCode key = KeyCode.LEFT;
     private KeyCode lastKey = KeyCode.LEFT;
@@ -61,6 +63,7 @@ public class GameController {
                 game.incScore();
                 if (game.gameWon()) {
                     gameView.drawGrid(coin, snake, obstacle);
+                    recordHighScore();
                     return;
                 }
                 spawnCoin();
@@ -75,6 +78,9 @@ public class GameController {
             gameView.gameWon();
             gameView.gameOver(snake);
             gameView.updateScoreLabel();
+            if (snake.getDead()) {
+                recordHighScore();
+            }
         }
     }));
 
@@ -139,6 +145,8 @@ public class GameController {
         game.resetScore();
         levelManager.reset();
         gameView.updateLevelLabel(1);
+        scoreSaved = false;
+        gameView.updateBestLabel(highScoreStore.load(), false);
 
         obstacle.reset();
 
@@ -182,6 +190,18 @@ public class GameController {
         gameView.updateLevelLabel(levelManager.getLevel());
     }
 
+    private void recordHighScore() {
+        if (scoreSaved) {
+            return;
+        }
+        scoreSaved = true;
+        boolean newBest = highScoreStore.save(game.getScorePoints());
+        gameView.updateBestLabel(highScoreStore.load(), newBest);
+    }
+
+    public void showBestScore() {
+        gameView.updateBestLabel(highScoreStore.load(), false);
+    }
 
     private void spawnCoin() {
         coin = coinFactory.create(snake, obstacle);

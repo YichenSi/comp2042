@@ -25,7 +25,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.Priority;
 
-
 public class GameView {
 
     private Canvas gridCanvas;
@@ -72,22 +71,9 @@ public class GameView {
         gameWonLabel.getStylesheets().add(css);
         gameWonLabel.setVisible(false);
 
-        scoreLabel = new Label("Score: " + game.getScorePoints());
-        scoreLabel.setId("scoreLabel");
-        scoreLabel.getStylesheets().add(css);
-        scoreLabel.setFont(new Font("Arial", 20));
-        scoreLabel.setVisible(true);
-
+        scoreLabel = new Label("Score: 0");
         levelLabel = new Label("Level: 1");
-        levelLabel.setId("levelLabel");
-        levelLabel.getStylesheets().add(css);
-        levelLabel.setFont(new Font("Arial", 20));
-        levelLabel.setVisible(true);
         bestLabel = new Label("Best: 0");
-        bestLabel.setId("bestLabel");
-        bestLabel.getStylesheets().add(css);
-        bestLabel.setFont(new Font("Arial", 20));
-        bestLabel.setVisible(true);
     }
 
     public void scaleToFullscreen(boolean fullScreen, Stage primaryStage, Obstacle obstacle, Snake snake, Coin coin) {
@@ -228,7 +214,7 @@ public class GameView {
     }
 
     public void updateBestLabel(int best, boolean isNew) {
-        bestLabel.setText((isNew ? "New Best: " : "Best: ") + best);
+        bestLabel.setText("Best: " + best);
     }
 
     public void attachTo(BorderPane root, StackPane boardPane) {
@@ -236,13 +222,17 @@ public class GameView {
         StackPane.setAlignment(gameOverLabel, Pos.CENTER);
         StackPane.setAlignment(gameWonLabel, Pos.CENTER);
 
+        levelLabel.setStyle("-fx-font-size: 15; -fx-text-fill: #2C2C2A;");
+        bestLabel.setStyle("-fx-font-size: 15; -fx-text-fill: #2C2C2A;");
+        scoreLabel.setStyle("-fx-font-size: 15; -fx-text-fill: #2C2C2A;");
+
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         Region spacer2 = new Region();
         HBox.setHgrow(spacer2, Priority.ALWAYS);
 
         HBox hud = new HBox(levelLabel, spacer, bestLabel, spacer2, scoreLabel);
-        hud.setAlignment(Pos.CENTER_LEFT);
+        hud.setAlignment(Pos.CENTER);
         hud.setPadding(new Insets(0, 14, 0, 14));
         hud.setPrefHeight(HUD_HEIGHT);
         hud.setMinHeight(HUD_HEIGHT);
@@ -255,20 +245,21 @@ public class GameView {
     }
 
 
+
     public void useLargeFonts() {
         gameOverLabel.setStyle("-fx-font-size: 50;");
         gameWonLabel.setStyle("-fx-font-size: 50;");
-        scoreLabel.setStyle("-fx-font-size: 35;");
-        levelLabel.setStyle("-fx-font-size: 35;");
-        bestLabel.setStyle("-fx-font-size: 35;");
+        levelLabel.setStyle("-fx-font-size: 24; -fx-text-fill: #2C2C2A;");
+        bestLabel.setStyle("-fx-font-size: 24; -fx-text-fill: #2C2C2A;");
+        scoreLabel.setStyle("-fx-font-size: 24; -fx-text-fill: #2C2C2A;");
     }
 
     public void useSmallFonts() {
         gameOverLabel.setStyle("-fx-font-size: 15;");
         gameWonLabel.setStyle("-fx-font-size: 15;");
-        scoreLabel.setStyle("-fx-font-size: 15;");
-        levelLabel.setStyle("-fx-font-size: 15;");
-        bestLabel.setStyle("-fx-font-size: 15;");
+        levelLabel.setStyle("-fx-font-size: 15; -fx-text-fill: #2C2C2A;");
+        bestLabel.setStyle("-fx-font-size: 15; -fx-text-fill: #2C2C2A;");
+        scoreLabel.setStyle("-fx-font-size: 15; -fx-text-fill: #2C2C2A;");
     }
 
 }
